@@ -4,12 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-  public static void main(String[] args) {
-
-    Graph graph = new Graph(1000);
-    boolean value = infPath(graph, 10000);
-    System.out.print(value);
-  }
 
   private static boolean infPath(Graph graph, int startNode) {
     startNode--;
@@ -39,6 +33,27 @@ public class Main {
     }
 
     return false;
+  }
+
+  private static void time(Graph graph, int startNode) {
+
+    long startTime = System.nanoTime();
+    boolean infinitePath = infPath(graph, startNode);
+    long stopTime = System.nanoTime();
+    long elapsedTime = stopTime - startTime;
+
+    if(infinitePath) {
+      System.out.println("Infinite path found");
+    } else {
+      System.out.println("Infinite path not found");
+    }
+
+    System.out.print("Elapsed time: " + elapsedTime + " nanoseconds");
+  }
+
+  public static void main(String[] args) {
+    Graph graph = new Graph(25000);
+    time(graph, 10);
   }
 }
 
