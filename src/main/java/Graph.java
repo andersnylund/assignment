@@ -1,50 +1,61 @@
 package main.java;
 
-/**
- * Created by anders on 2/1/17.
- */
-public class Graph {
+import java.util.Random;
 
-  protected boolean[][] arcs;
+class Graph {
 
-  /**
-   * Creates a new random graph with n number of nodes
-   *
-   * @param n Number of nodes
-   */
-  public Graph(int n) {
+  boolean[][] arcs;
+
+  Graph(int n) {
     arcs = new boolean[n][n];
 
-    // TODO Create random graph
+    for(int i = 0; i < n; i++) {
+      for(int j = 0; j < n; j++) {
+        arcs[i][j] = false;
+      }
+    }
+
+    Random random = new Random();
+
+    // Iterate trough every node
+    for(int startNode = 0; startNode < n; startNode++) {
+
+      // random amount of end nodes
+      int numberOfArcs = random.nextInt(n);
+
+      int counter = 0;
+
+      while (counter < numberOfArcs) {
+
+        // Select random end node
+        int endNode = random.nextInt(n);
+
+        // prevent arcs from a node to itself
+        if(startNode != endNode) {
+
+          // check if inverse connection already exist
+          if(!arcs[endNode][startNode]) {
+            arcs[startNode][endNode] = true;
+          }
+        }
+        counter++;
+      }
+    }
   }
 
-  public Graph(boolean[][] arcs) {
+  Graph(boolean[][] arcs) {
     this.arcs = arcs;
   }
 
-  public void printGraph() {
-    for (int i = 0; i < this.arcs.length; i++) {
-      for (int j = 0; j < this.arcs.length; j++) {
-        System.out.print(this.arcs[i][j] + " ");
-      }
-      System.out.println();
-    }
-
-    System.out.println("\nOr presented in an other way\n");
-
+  void print() {
     for (int i = 0; i < this.arcs.length; i++) {
       System.out.print("Node " + (i + 1) + " is connected to: ");
       for (int j = 0; j < this.arcs.length; j++) {
-        if(arcs[i][j] == true)
+        if(arcs[i][j])
           System.out.print((j+1) + " ");
       }
       System.out.println();
     }
   }
-
-  public static boolean infPath(Graph graph, int n) {
-    // TODO
-
-    return true;
-  }
 }
+
