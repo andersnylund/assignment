@@ -1,27 +1,52 @@
 public class Main {
 
   public static void main(String[] args) {
+
     int graphSize;
-    try {
-      graphSize = Integer.parseInt(args[0]);
-      Graph graph = new Graph(graphSize);
-      long startTime = System.currentTimeMillis();
-      boolean infinitePath = graph.infPath(1);
-      long stopTime = System.currentTimeMillis();
-      long elapsedTime = stopTime - startTime;
 
-      if(infinitePath) {
-        System.out.println("Infinite path found");
-      } else {
-        System.out.println("Infinite path not found");
+    if(args.length != 0) {
+      try {
+        graphSize = Integer.parseInt(args[0]);
+        System.out.println("Creating random graph...");
+        Graph graph = new Graph(graphSize);
+        timeExecution(graph, 1);
       }
-
-      System.out.println("Elapsed time: " + elapsedTime + " milliseconds");
-    } catch (Exception e) {
-      System.out.println("Invalid argument");
-      e.printStackTrace();
-      System.exit(0);
+      catch (Exception e) {
+        System.out.println("Invalid argument");
+        e.printStackTrace();
+        System.exit(0);
+      }
     }
+
+    else {
+      boolean[][] arcs3 = new boolean[][]{
+        {false, true, false, false, false},
+        {false, false, true, true, false},
+        {false, false, false, false, true},
+        {false, false, false, false, true},
+        {false, true, false, false, false},
+      };
+
+      Graph graph3 = new Graph(arcs3);
+
+      timeExecution(graph3,4);
+    }
+  }
+
+  private static void timeExecution(Graph graph, int startNode) {
+
+    long startTime = System.nanoTime();
+    boolean infinitePath = graph.infPath(startNode);
+    long stopTime = System.nanoTime();
+    long elapsedTime = stopTime - startTime;
+
+    if(infinitePath) {
+      System.out.println("Infinite path found");
+    } else {
+      System.out.println("Infinite path not found");
+    }
+
+    System.out.println("Elapsed time: " + elapsedTime + " nanoseconds");
   }
 }
 

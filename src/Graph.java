@@ -2,10 +2,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-class Graph {
+public class Graph {
 
   private boolean[][] arcs;
-
 
   Graph(boolean[][] arcs) {
     this.arcs = arcs;
@@ -14,17 +13,11 @@ class Graph {
   Graph(int n) {
     arcs = new boolean[n][n];
 
-    for(int i = 0; i < n; i++) {
-      for(int j = 0; j < n; j++) {
-        arcs[i][j] = false;
-      }
-    }
-
     Random random = new Random();
     // Iterate trough every node
     for(int startNode = 0; startNode < n; startNode++) {
       // random amount of end nodes
-      int numberOfArcs = random.nextInt(n);
+      int numberOfArcs = random.nextInt(1);
       int counter = 0;
       while (counter < numberOfArcs) {
         // Select random end node
@@ -34,6 +27,9 @@ class Graph {
           // check if inverse connection already exist
           if(!arcs[endNode][startNode]) {
             arcs[startNode][endNode] = true;
+          }
+          else {
+            arcs[startNode][endNode] = false;
           }
         }
         counter++;
