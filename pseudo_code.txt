@@ -1,0 +1,19 @@
+InfPath(G, v)
+	return FindNodesRecursive(G, v, [])
+
+FindNodesRecursive(G, v, checkedNodes)
+	if checkedNodes contains v
+		return true
+	else
+		foundNodes = []
+		foreach endNode in v.endNodes
+			foundNodes.append(FindNodesRecursive(G, endNode, checkedNodes)
+		if foundNodes contains true
+			return true
+		return false
+
+
+The method InfPath takes a graph and an integer as argument and checks if an infinite path can be found, starting from the node with the index of the passed integer. InfPath returns the value
+of the method FindNodesRecursive.
+
+As InfPath takes only a graph and an integer as argument, this method needed to be created 
