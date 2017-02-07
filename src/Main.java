@@ -19,17 +19,21 @@ public class Main {
     }
 
     else {
-      boolean[][] arcs3 = new boolean[][]{
-        {false, true, false, false, false},
-        {false, false, true, true, false},
-        {false, false, false, false, true},
-        {false, false, false, false, true},
-        {false, true, false, false, false},
-      };
+    boolean[][] arcs1 = new boolean[][]{
+      {false, true, false, true, false, false, false, false, false},
+      {false, false, true, false, true, false, false, false, false},
+      {false, false, false, false, false, true, false, false, false},
+      {false, false, false, false, true, false, true, false, false},
+      {true, false, false, false, false, true, false, true, true},
+      {false, false, false, false, false, false, false, false, true},
+      {false, false, false, false, true, false, false, true, false},
+      {false, false, false, false, false, false, false, false, true},
+      {false, false, false, false, false, false, false, false, false},
+    };
 
-      Graph graph3 = new Graph(arcs3);
+      Graph graph1 = new Graph(arcs1);
 
-      timeExecution(graph3,4);
+      timeExecution(graph1,3);
     }
   }
 

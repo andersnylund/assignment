@@ -52,8 +52,9 @@ public class Graph {
 
   private boolean findNodesRecursive(Graph graph, int startNode, List<Integer> checkedNodes) {
 
-    if (checkedNodes.contains(startNode))
+    if (checkedNodes.contains(startNode)) {
       return true;
+    }
 
     List<Integer> copiedNodes = new ArrayList<>();
 
@@ -63,12 +64,12 @@ public class Graph {
 
     copiedNodes.add(startNode);
 
-    List<Boolean> foundNodes = new ArrayList<>();
+    List<Boolean> returnValues = new ArrayList<>();
 
     for (int endNode = 0; endNode < graph.arcs.length; endNode++) {
       if(graph.arcs[startNode][endNode])
-        foundNodes.add(findNodesRecursive(graph, endNode, copiedNodes));
-      if(foundNodes.contains(true))
+        returnValues.add(findNodesRecursive(graph, endNode, copiedNodes));
+      if(returnValues.contains(true))
         return true;
     }
 
