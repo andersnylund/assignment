@@ -45,6 +45,17 @@ public class Graph {
     return arcs;
   }
 
+  public void printArcs() {
+    for (int i = 0; i < this.arcs.length; i++) {
+      System.out.print("Node " + (i + 1) + " is connected to: ");
+      for (int j = 0; j < this.arcs.length; j++) {
+        if(arcs[i][j])
+          System.out.print((j+1) + " ");
+      }
+      System.out.println();
+    }
+  }
+
   public boolean infPath(int startNode) {
     startNode--;
     return findNodesRecursive(this, startNode, new ArrayList<>());
@@ -64,27 +75,15 @@ public class Graph {
 
     copiedNodes.add(startNode);
 
-    List<Boolean> returnValues = new ArrayList<>();
-
     for (int endNode = 0; endNode < graph.arcs.length; endNode++) {
-      if(graph.arcs[startNode][endNode])
-        returnValues.add(findNodesRecursive(graph, endNode, copiedNodes));
-      if(returnValues.contains(true))
-        return true;
+      if(graph.arcs[startNode][endNode]) {
+        if(findNodesRecursive(graph, endNode, copiedNodes)) {
+          return true;
+        }
+      }
     }
 
     return false;
-  }
-
-  public void printArcs() {
-    for (int i = 0; i < this.arcs.length; i++) {
-      System.out.print("Node " + (i + 1) + " is connected to: ");
-      for (int j = 0; j < this.arcs.length; j++) {
-        if(arcs[i][j])
-          System.out.print((j+1) + " ");
-      }
-      System.out.println();
-    }
   }
 }
 

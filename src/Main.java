@@ -33,7 +33,7 @@ public class Main {
 
       Graph graph1 = new Graph(arcs1);
 
-      timeExecution(graph1,3);
+      timeExecution(graph1,6);
     }
   }
 
