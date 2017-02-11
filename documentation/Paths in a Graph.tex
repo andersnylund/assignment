@@ -31,7 +31,7 @@
 }
 
 \lstset{emph={%  
-		foreach, contains, in%
+		foreach, contains, in, procedure%
 	},emphstyle={\color{blue}\bfseries}%
 }%
 
@@ -53,54 +53,66 @@ This document is the answer of applicant Anders Nylund to the Preliminary assign
 \end{abstract}
 
 \newpage
-\section*{Task 1}
+\section*{Task 1 Solution}
+
+The method InfPath takes a graph and an integer as argument and checks if an infinite path can be found, starting from the node with the index of the passed integer. InfPath returns the value of the method FindNodesRecursive. As InfPath takes only a graph and an integer as argument, FindNodesRecursive-method needed to be created as it adds one argument more.  
+
+The arguments in the methods are passed by value, not reference. Every node has an iterable list of nodes that it has an arc to.
 
 \begin{lstlisting}
- 1.	InfPath(G, v)
+ 1.	procedure InfPath(G, v)
  2.		return FindNodesRecursive(G, v, [])
  3.
- 4.	FindNodesRecursive(G, v, checkedNodes)
- 5.	if checkedNodes contains v
- 6.		return true
- 7.	else
- 8.		returnValues = []
- 9.		foreach endNode in v.endNodes
-10.			returnValues.add(FindNodesRecursive(G, endNode, checkedNodes)
-11.			if returnValues contains true
-12.				return true
-13.		return false
+ 4.	procedure FindNodesRecursive(G, v, checkedNodes)
+ 5.		if checkedNodes contains v
+ 6.			return true
+ 7.		else
+ 8.			checkedNodes.add(v)
+ 9.			foreach endNode in v.endNodes
+10.				if FindNodesRecursive(G, endNode, checkedNodes)
+11.					return true
+12.			return false
 \end{lstlisting}
-
-The method InfPath takes a graph and an integer as argument and checks if an infinite path can be found, starting from
-the node with the index of the passed integer. InfPath returns the value of the method FindNodesRecursive.
-As InfPath takes only a graph and an integer as argument, FindNodesRecursive-method needed to be created as it adds
-one argument more.  The pseudo code has the following assumptions. The arguments in the methods are passed by value, not reference. Every node has an iterable list of nodes that it has an arc to.
 
 Instead of having comments in between the pseudo code, line numbers has been added before every line. This allows explanation of each row individually without making the pseudo code hard to read.
 
 \begin{enumerate}
 	\item Declaration of method InfPath that takes a graph and an integer as argument.
+	
 	\item InfPath returns the return value of FindNodesRecursive(). Here the graph G, starting node v and an initialized
 	empty list is passed as argument.
+	
 	\item -
-	\item Declaration of FindNodesRecursive. The arguments are given the same names as when passing them, except for
-	the empty list, which is now called checkedNodes.
-	\item A control statement that searches for v in the list of checked nodes. The list of checked nodes consist of the
-	previously checked nodes. If the currently investigated node has already been checked, it means that an
-	infinite path has been found
-	\item If the statement before was true, the value true is returned
+	
+	\item Declaration of FindNodesRecursive. The arguments are given the same names as when passing them, except for the empty list, which is now called checkedNodes.
+	
+	\item An if statement that searches for v in the list of checked nodes. The list of checked nodes consist of the
+	previously checked nodes. If the current node has already been checked, it means that an infinite path has been found
+	
+	\item Return true if the current node was found
+	
 	\item If the statement on line 5 was false the following block of code will be executed
-	\item Initialize a new list. This list will be populated of boolean values that are returned from FindNodesRecursive
-	that is called recursively.
-	\item Iterate through every end node of the current start node
-	\item Call the method FindNodesRecursive and add the return value to the list of return values
-	\item On each iteration of end nodes, check if the current iteration returned true.
-	\item If preceding statement was true, return true
-	\item If the execution has made it to this point, no infinite paths were found, and the method returns false
+	
+	\item Add the current node the list of checked nodes
+	
+	\item Iterate through every end node of the current node
+	
+	\item Make a recursive call to FindNodesRecursive and evaluate the return value
+	
+	\item If making a recursive call returns true, return true
+	
+	\item Finally, if the execution has made it to this point and no infinite paths were found, the method returns false
 \end{enumerate}
 
-The idea of the algorithm is to create a 'tree' of recursive calls. For every end node in the current node in iteration, a new call to find the end nodes is made. The recursive method is built to return true as fast as possible when an infinite path
-is found in the graph.
+The algorithm creates a 'tree' of recursive calls. For every end node in the current node in iteration, a new call to find the end nodes of the current node in the iteration is made. The recursive method is built to return true as fast as possible when an infinite path is found in the graph.
+
+The call to the recursive method is made for each arc that start from a node. 
+
+As the algorithm does not evaluate the graph in any way, finding the node is dependent on the size of the graph. The time complexity if making sure there is no infinite path is 
+
+$$\sum_{i=1}^{n} 2^{-}$$ 
+
+i.e. $O(n^2)$ 
 
 \newpage
 \section*{Task 2}
