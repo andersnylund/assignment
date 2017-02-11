@@ -1,89 +1,27 @@
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
 public class Graph {
 
-  private boolean[][] arcs;
+  private Dictionary<Integer, ArrayList<Integer>> nodes = new Hashtable<>();
 
-  Graph(boolean[][] arcs) {
-    this.arcs = arcs;
-  }
-
-  Graph(int n) {
-    arcs = new boolean[n][n];
-
-    Random random = new Random();
-    // Iterate trough every node
-    for(int startNode = 0; startNode < n; startNode++) {
-      // random amount of end nodes
-      int numberOfArcs = random.nextInt(1);
-      int counter = 0;
-      while (counter < numberOfArcs) {
-        // Select random end node
-        int endNode = random.nextInt(n);
-        // prevent arcs from a node to itself
-        if(startNode != endNode) {
-          // check if inverse connection already exist
-          if(!arcs[endNode][startNode]) {
-            arcs[startNode][endNode] = true;
-          }
-          else {
-            arcs[startNode][endNode] = false;
-          }
-        }
-        counter++;
+  public void addArc(int startIndex, int endIndex) {
+    ArrayList<Integer> endNodes = nodes.get(startIndex);
+    if(endNodes != null) {
+      if(endNodes.contains(endIndex))
+        return;
+      endNodes.add(endIndex);
+    }
+    else {
+      if (nodes.get(endIndex) != null) {
+        if (nodes.get(endIndex).contains(startIndex))
+          return;
       }
+      endNodes = new ArrayList<>();
+      endNodes.add(endIndex);
     }
-  }
-
-  public void setArcs(boolean[][] arcs) {
-    this.arcs = arcs;
-  }
-
-  public boolean[][] getArcs () {
-    return arcs;
-  }
-
-  public void printArcs() {
-    for (int i = 0; i < this.arcs.length; i++) {
-      System.out.print("Node " + (i + 1) + " is connected to: ");
-      for (int j = 0; j < this.arcs.length; j++) {
-        if(arcs[i][j])
-          System.out.print((j+1) + " ");
-      }
-      System.out.println();
-    }
-  }
-
-  public boolean infPath(int startNode) {
-    startNode--;
-    return findNodesRecursive(this, startNode, new ArrayList<>());
-  }
-
-  private boolean findNodesRecursive(Graph graph, int startNode, List<Integer> checkedNodes) {
-
-    if (checkedNodes.contains(startNode)) {
-      return true;
-    }
-
-    List<Integer> copiedNodes = new ArrayList<>();
-
-    for(int node : checkedNodes) {
-      copiedNodes.add(node);
-    }
-
-    copiedNodes.add(startNode);
-
-    for (int endNode = 0; endNode < graph.arcs.length; endNode++) {
-      if(graph.arcs[startNode][endNode]) {
-        if(findNodesRecursive(graph, endNode, copiedNodes)) {
-          return true;
-        }
-      }
-    }
-
-    return false;
+    nodes.put(startIndex, endNodes);
   }
 }
 
