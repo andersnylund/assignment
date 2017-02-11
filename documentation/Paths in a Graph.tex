@@ -1,0 +1,114 @@
+\documentclass[]{article}
+\usepackage{vhistory}
+\usepackage{graphicx}
+\usepackage{blindtext}
+\usepackage{scrextend}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[utf8]{inputenc}
+\addtokomafont{labelinglabel}{\sffamily}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+	language=Java,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3
+}
+
+\lstset{emph={%  
+		foreach, contains, in%
+	},emphstyle={\color{blue}\bfseries}%
+}%
+
+%opening
+\title{Preliminary assignment - Paths in a Graph}
+\author{Author: Anders Nylund}
+
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+	Application number: xxxxxx
+\end{center}
+
+\begin{abstract}
+This document is the answer of applicant Anders Nylund to the Preliminary assignment "Paths in a Graph". The assignment is part of the admission process to Computer Science at University of Helsinki.
+\end{abstract}
+
+\newpage
+\section*{Task 1}
+
+\begin{lstlisting}
+ 1.	InfPath(G, v)
+ 2.		return FindNodesRecursive(G, v, [])
+ 3.
+ 4.	FindNodesRecursive(G, v, checkedNodes)
+ 5.	if checkedNodes contains v
+ 6.		return true
+ 7.	else
+ 8.		returnValues = []
+ 9.		foreach endNode in v.endNodes
+10.			returnValues.add(FindNodesRecursive(G, endNode, checkedNodes)
+11.			if returnValues contains true
+12.				return true
+13.		return false
+\end{lstlisting}
+
+The method InfPath takes a graph and an integer as argument and checks if an infinite path can be found, starting from
+the node with the index of the passed integer. InfPath returns the value of the method FindNodesRecursive.
+As InfPath takes only a graph and an integer as argument, FindNodesRecursive-method needed to be created as it adds
+one argument more.  The pseudo code has the following assumptions. The arguments in the methods are passed by value, not reference. Every node has an iterable list of nodes that it has an arc to.
+
+Instead of having comments in between the pseudo code, line numbers has been added before every line. This allows explanation of each row individually without making the pseudo code hard to read.
+
+\begin{enumerate}
+	\item Declaration of method InfPath that takes a graph and an integer as argument.
+	\item InfPath returns the return value of FindNodesRecursive(). Here the graph G, starting node v and an initialized
+	empty list is passed as argument.
+	\item -
+	\item Declaration of FindNodesRecursive. The arguments are given the same names as when passing them, except for
+	the empty list, which is now called checkedNodes.
+	\item A control statement that searches for v in the list of checked nodes. The list of checked nodes consist of the
+	previously checked nodes. If the currently investigated node has already been checked, it means that an
+	infinite path has been found
+	\item If the statement before was true, the value true is returned
+	\item If the statement on line 5 was false the following block of code will be executed
+	\item Initialize a new list. This list will be populated of boolean values that are returned from FindNodesRecursive
+	that is called recursively.
+	\item Iterate through every end node of the current start node
+	\item Call the method FindNodesRecursive and add the return value to the list of return values
+	\item On each iteration of end nodes, check if the current iteration returned true.
+	\item If preceding statement was true, return true
+	\item If the execution has made it to this point, no infinite paths were found, and the method returns false
+\end{enumerate}
+
+The idea of the algorithm is to create a 'tree' of recursive calls. For every end node in the current node in iteration, a new call to find the end nodes is made. The recursive method is built to return true as fast as possible when an infinite path
+is found in the graph.
+
+\newpage
+\section*{Task 2}
+
+\begin{lstlisting}
+
+Some fancy code
+
+\end{lstlisting}
+
+\end{document}

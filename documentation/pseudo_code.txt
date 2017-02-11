@@ -8,8 +8,8 @@ FindNodesRecursive(G, v, checkedNodes)
 		returnValues = []
 		foreach endNode in v.endNodes
 			returnValues.append(FindNodesRecursive(G, endNode, checkedNodes)
-		  if returnValues contains true
-			  return true
+			if returnValues contains true
+				return true
 		return false
 
 
