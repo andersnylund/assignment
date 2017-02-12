@@ -1,12 +1,8 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class Graph {
 
-  private Map<Integer, List<Integer>> arcs = new HashMap<>();
+  private Map<Integer, Set<Integer>> arcs = new HashMap<>();
   private Random rand = new Random();
 
   public Graph() {}
@@ -17,33 +13,40 @@ public class Graph {
         addArc(i+1, rand.nextInt(n)+1);
       }
     }
-
-    for(Map.Entry<Integer, List<Integer>> entry : arcs.entrySet()) {
-      entry.getValue().sort(Integer::compareTo);
-    }
-
   }
 
   public void addArc(int startIndex, int endIndex) {
-    List<Integer> endNodes = arcs.get(startIndex);
-    if(endNodes != null) {
-      if(endNodes.contains(endIndex))
+
+    // No arcs to itself
+    if(startIndex == endIndex) {
+      return;
+    }
+
+    // Must be a directed graph
+    if(arcs.get(endIndex) != null) {
+      if(arcs.get(endIndex).contains(startIndex)) {
         return;
-      endNodes.add(endIndex);
-    }
-    else {
-      if (arcs.get(endIndex) != null) {
-        if (arcs.get(endIndex).contains(startIndex))
-          return;
       }
-      endNodes = new ArrayList<>();
-      endNodes.add(endIndex);
     }
+
+    // No duplicates
+    if(arcs.get(startIndex) != null) {
+      if(arcs.get(startIndex).contains(endIndex)) {
+        return;
+      }
+    }
+
+    Set<Integer> endNodes = arcs.get(startIndex);
+    if (endNodes == null) {
+      endNodes = new TreeSet<>();
+    }
+    endNodes.add(endIndex);
+
     arcs.put(startIndex, endNodes);
   }
 
   public void print() {
-    for(Map.Entry<Integer,List<Integer>> entry : arcs.entrySet()) {
+    for(Map.Entry<Integer,Set<Integer>> entry : arcs.entrySet()) {
       System.out.print(entry.getKey() + " -> ");
       for(Integer value : entry.getValue()) {
         System.out.print(value + " ");
