@@ -1,14 +1,27 @@
-
-
 public class Main {
 
   public static void main(String[] args) {
 
-    Graph graph = new Graph(1000);
+    Graph graph = new Graph(10);
     graph.print();
 
-    System.out.print(graph.infPath(1));
+    time(graph);
 
+  }
+
+  private static void time(Graph graph) {
+    System.out.println("Starting search...");
+    long startTime = System.nanoTime();
+    boolean found = graph.infPath(1);
+    long stopTime = System.nanoTime();
+
+    if(found) {
+      System.out.print("Infinite path found in ");
+    } else {
+      System.out.print("Infinite path not found in ");
+    }
+
+    System.out.print(stopTime - startTime + " nanoseconds");
   }
 }
 
