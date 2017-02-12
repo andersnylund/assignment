@@ -1,29 +1,75 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
 
   public static void main(String[] args) {
 
-    Graph graph = new Graph(10);
-    graph.print();
+    Graph graph = new Graph(10000);
 
-    time(graph);
-
+    timeExecution(graph, 1,100000);
   }
 
-  private static void time(Graph graph) {
-    System.out.println("Starting search...");
-    long startTime = System.nanoTime();
-    boolean found = graph.infPath(1);
-    long stopTime = System.nanoTime();
+  private static void timeExecution(Graph graph, int startNode, int testRuns) {
+    System.out.println("Starting timing of execution...");
 
-    if(found) {
-      System.out.print("Infinite path found in ");
-    } else {
-      System.out.print("Infinite path not found in ");
+    List<Long> runs = new ArrayList<>();
+
+    for(int i = 0; i < testRuns; i++) {
+      long startTime = System.nanoTime();
+      graph.infPath(1);
+      long stopTime = System.nanoTime();
+      runs.add(stopTime-startTime);
     }
 
-    System.out.print(stopTime - startTime + " nanoseconds");
+    boolean found = graph.infPath(startNode);
+    if(found) {
+      System.out.println("FOUND! There was an infinite path");
+    } else {
+      System.out.println("Not found. There was not an infinite path");
+    }
+
+    long average = averageExecutionTime(runs);
+
+    System.out.print("Average search time: " + average + "  nanoseconds");
+  }
+
+  private static long averageExecutionTime(List<Long> runs) {
+    long sum = 0;
+    for(long value : runs) {
+      sum = sum + value;
+    }
+    return sum/runs.size();
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //    Graph graph4 = new Graph();
 //    graph4.addArc(1, 2);

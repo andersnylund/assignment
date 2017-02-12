@@ -33,7 +33,7 @@ public class Graph {
     if (endNodes == null) {
       endNodes = new TreeSet<>();
     }
-    
+
     endNodes.add(endIndex);
     arcs.put(startIndex, endNodes);
   }
@@ -49,14 +49,20 @@ public class Graph {
   }
 
   public boolean infPath(int startNode) {
-    return findEndNodesRecursive(startNode, new ArrayList<>());
+    return findEndNodesRecursive(startNode, new ArrayList<>(), new ArrayList<>());
   }
 
-  private boolean findEndNodesRecursive (int startNode, List<Integer> checkedNodes) {
+  private boolean findEndNodesRecursive (int startNode, List<Integer> checkedNodes, List<Integer> deadEnds) {
     if (checkedNodes.contains(startNode)) {
       return true;
     }
 
+    if (deadEnds.contains(startNode)) {
+      return false;
+    }
+
+    // Create a copy of the currently checked nodes
+    // Java passes arguments by reference
     List<Integer> copiedNodes = new ArrayList<>();
     for(Integer node : checkedNodes) {
       copiedNodes.add(node);
@@ -64,9 +70,13 @@ public class Graph {
 
     copiedNodes.add(startNode);
 
+    // Make a list of each returned boolean value
+    List<Boolean> returnedValues = new ArrayList<>();
+
     if (arcs.containsKey(startNode)) {
       for(Integer endNode : arcs.get(startNode)) {
-        if(findEndNodesRecursive(endNode, copiedNodes)) {
+        returnedValues.add(findEndNodesRecursive(endNode, copiedNodes, deadEnds));
+        if(returnedValues.contains(true)) {
           return true;
         }
       }
