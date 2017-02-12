@@ -29,19 +29,12 @@ public class Graph {
       }
     }
 
-    // No duplicates
-    if(arcs.get(startIndex) != null) {
-      if(arcs.get(startIndex).contains(endIndex)) {
-        return;
-      }
-    }
-
     Set<Integer> endNodes = arcs.get(startIndex);
     if (endNodes == null) {
       endNodes = new TreeSet<>();
     }
+    
     endNodes.add(endIndex);
-
     arcs.put(startIndex, endNodes);
   }
 
