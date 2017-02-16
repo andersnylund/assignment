@@ -57,10 +57,6 @@ public class Graph {
       return true;
     }
 
-    if (deadEnds.contains(startNode)) {
-      return false;
-    }
-
     // Create a copy of the currently checked nodes
     // Java passes arguments by reference
     List<Integer> copiedNodes = new ArrayList<>();
@@ -70,16 +66,23 @@ public class Graph {
 
     copiedNodes.add(startNode);
 
-    // Make a list of each returned boolean value
-    List<Boolean> returnedValues = new ArrayList<>();
+    // TODO resolve if checking for deadEnds is efficient or not
 
+    // If startNode has arcs
     if (arcs.containsKey(startNode)) {
+      // Iterate all arcs
       for(Integer endNode : arcs.get(startNode)) {
-        returnedValues.add(findEndNodesRecursive(endNode, copiedNodes, deadEnds));
-        if(returnedValues.contains(true)) {
+
+        if(deadEnds.contains(endNode)) {
+          return false;
+        }
+        if (findEndNodesRecursive(endNode, copiedNodes, deadEnds)) {
           return true;
+        } else {
+          deadEnds.add(endNode);
         }
       }
+
     }
     return false;
   }

@@ -7,19 +7,19 @@ public class Main {
 
     Graph graph = new Graph(10000);
 
-    timeExecution(graph, 1,100000);
+    timeExecution(graph,1 ,10000000);
   }
 
   private static void timeExecution(Graph graph, int startNode, int testRuns) {
-    System.out.println("Starting timing of execution...");
+    System.out.println("Started timing of execution...");
 
-    List<Long> runs = new ArrayList<>();
+    List<Long> runTimes = new ArrayList<>();
 
     for(int i = 0; i < testRuns; i++) {
       long startTime = System.nanoTime();
-      graph.infPath(1);
+      graph.infPath(startNode);
       long stopTime = System.nanoTime();
-      runs.add(stopTime-startTime);
+      runTimes.add(stopTime-startTime);
     }
 
     boolean found = graph.infPath(startNode);
@@ -29,7 +29,7 @@ public class Main {
       System.out.println("Not found. There was not an infinite path");
     }
 
-    long average = averageExecutionTime(runs);
+    long average = averageExecutionTime(runTimes);
 
     System.out.print("Average search time: " + average + "  nanoseconds");
   }
@@ -100,10 +100,30 @@ public class Main {
 //    graph1.addArc(6, 9);
 //    graph1.addArc(7, 5);
 //    graph1.addArc(7, 8);
-//
-//
 //    graph1.addArc(8, 9);
 //
 //    graph1.print();
 //
 //    System.out.print(graph1.infPath(6));
+
+
+
+
+
+//    Graph graph2 = new Graph();
+//    graph2.addArc(1, 2);
+//    graph2.addArc(1, 4);
+//    graph2.addArc(2, 3);
+//    graph2.addArc(2, 5);
+//    graph2.addArc(3, 6);
+//    graph2.addArc(3, 5);
+//    graph2.addArc(4, 5);
+//    graph2.addArc(4, 7);
+//    graph2.addArc(4, 8);
+//    graph2.addArc(5, 6);
+//    graph2.addArc(5, 8);
+//    graph2.addArc(6, 9);
+//    graph2.addArc(7, 8);
+//    graph2.addArc(8, 9);
+//
+//    graph2.print();
