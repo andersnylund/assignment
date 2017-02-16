@@ -1,0 +1,47 @@
+
+// Graph D in the assignment example
+//    Graph graphD = new Graph();
+//    graphD.addArc(1, 2);
+//    graphD.addArc(2, 3);
+//    graphD.addArc(2, 4);
+//    graphD.addArc(3, 5);
+//    graphD.addArc(4, 5);
+//    graphD.addArc(5, 2);
+
+
+// Graph A in the assignment example
+//    Graph graphA = new Graph();
+//    graphA.addArc(1, 2);
+//    graphA.addArc(1, 4);
+//    graphA.addArc(2, 3);
+//    graphA.addArc(2, 5);
+//    graphA.addArc(3, 6);
+//    graphA.addArc(4, 5);
+//    graphA.addArc(4, 7);
+//    graphA.addArc(5, 1);
+//    graphA.addArc(5, 3);
+//    graphA.addArc(5, 6);
+//    graphA.addArc(5, 8);
+//    graphA.addArc(5, 9);
+//    graphA.addArc(6, 9);
+//    graphA.addArc(7, 5);
+//    graphA.addArc(7, 8);
+//    graphA.addArc(8, 9);
+
+
+// Graph B in the assignment example
+//    Graph graphB = new Graph();
+//    graphB.addArc(1, 2);
+//    graphB.addArc(1, 4);
+//    graphB.addArc(2, 3);
+//    graphB.addArc(2, 5);
+//    graphB.addArc(3, 6);
+//    graphB.addArc(3, 5);
+//    graphB.addArc(4, 5);
+//    graphB.addArc(4, 7);
+//    graphB.addArc(4, 8);
+//    graphB.addArc(5, 6);
+//    graphB.addArc(5, 8);
+//    graphB.addArc(6, 9);
+//    graphB.addArc(7, 8);
+//    graphB.addArc(8, 9);
