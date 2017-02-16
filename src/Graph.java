@@ -59,12 +59,12 @@ public class Graph {
 
     // Create a copy of the currently checked nodes
     // Java passes arguments by reference
-    List<Integer> copiedNodes = new ArrayList<>();
+    List<Integer> clonedNodes = new ArrayList<>();
     for(Integer node : checkedNodes) {
-      copiedNodes.add(node);
+      clonedNodes.add(node);
     }
 
-    copiedNodes.add(startNode);
+    clonedNodes.add(startNode);
 
     // TODO resolve if checking for deadEnds is efficient or not
 
@@ -76,7 +76,7 @@ public class Graph {
         if(deadEnds.contains(endNode)) {
           return false;
         }
-        if (findEndNodesRecursive(endNode, copiedNodes, deadEnds)) {
+        if (findEndNodesRecursive(endNode, clonedNodes, deadEnds)) {
           return true;
         } else {
           deadEnds.add(endNode);
