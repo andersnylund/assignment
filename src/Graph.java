@@ -1,4 +1,10 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+import java.util.TreeSet;
+import java.util.Set;
 
 public class Graph {
 
@@ -59,12 +65,12 @@ public class Graph {
 
     // Create a copy of the currently checked nodes
     // Java passes arguments by reference
-    List<Integer> clonedNodes = new ArrayList<>();
+    List<Integer> copiedNodes = new ArrayList<>();
     for(Integer node : checkedNodes) {
-      clonedNodes.add(node);
+      copiedNodes.add(node);
     }
 
-    clonedNodes.add(startNode);
+    copiedNodes.add(startNode);
 
     // TODO resolve if checking for deadEnds is efficient or not
 
@@ -76,7 +82,7 @@ public class Graph {
         if(deadEnds.contains(endNode)) {
           return false;
         }
-        if (findEndNodesRecursive(endNode, clonedNodes, deadEnds)) {
+        if (findEndNodesRecursive(endNode, copiedNodes, deadEnds)) {
           return true;
         } else {
           deadEnds.add(endNode);

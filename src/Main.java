@@ -5,9 +5,25 @@ public class Main {
 
   public static void main(String[] args) {
 
-    Graph graph = new Graph(10000);
+    Graph graphA = new Graph();
+    graphA.addArc(1, 2);
+    graphA.addArc(1, 4);
+    graphA.addArc(2, 3);
+    graphA.addArc(2, 5);
+    graphA.addArc(3, 6);
+    graphA.addArc(4, 5);
+    graphA.addArc(4, 7);
+    graphA.addArc(5, 1);
+    graphA.addArc(5, 3);
+    graphA.addArc(5, 6);
+    graphA.addArc(5, 8);
+    graphA.addArc(5, 9);
+    graphA.addArc(6, 9);
+    graphA.addArc(7, 5);
+    graphA.addArc(7, 8);
+    graphA.addArc(8, 9);
 
-    timeExecution(graph,1 ,10000000);
+    timeExecution(graphA, 1, 1);
   }
 
   private static void timeExecution(Graph graph, int startNode, int testRuns) {
