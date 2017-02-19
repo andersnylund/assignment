@@ -49,7 +49,7 @@
 \end{center}
 
 \begin{abstract}
-This document is the answer of applicant Anders Nylund to the Preliminary assignment "Paths in a Graph". The assignment is part of the admission process to Computer Science at University of Helsinki.
+This document is the answer of applicant Anders Nylund to the Preliminary assignment "Paths in a Graph". The assignment is part of the admission process to the program Computer Science at University of Helsinki.
 \end{abstract}
 
 \newpage
@@ -85,7 +85,7 @@ The arguments in the methods are passed by reference. Every node has an iterable
 23	endfunction
 \end{lstlisting}
 
-The algorithm creates a 'tree' of recursive calls. For every end node in the current node in iteration, a new call to find the end nodes of the current node in the iteration is made. This recursive calling is made as long as either an infinite path is found, or when a node that has no arcs starting from it, is found. 
+The algorithm creates a 'tree' of recursive calls. For every end node in the current node in iteration, a new call to find the end nodes of the current node in the iteration is made. This recursive calling is made as long as either an infinite path is found, or when a node that has no arcs starting from it, is found. I.e. this algorithm is an adaption of \textbf{Depth-first Search (DFS)}.
 
 The algorithm start by calling the recursive method FindEndNodesRecursive (FENR) that takes the graph, a starting node and two empty lists as argument. These two empty lists will be used for determination if an infinite path was found and for optimizing the search time. The first call to FENR makes the 'trees' first branch. From this branch FENR will be called as many times as the current nodes has starting arcs. 
 
@@ -97,11 +97,7 @@ The return value of FENR is evaluated, true is returned to the caller of the met
 
 The checking of dead ends significantly improves the search time of the algorithm. Without this feature the algorithm would make recursive calls on nodes, that has already been proved to not contain infinite paths. Of course in the beginning every path or branch of nodes has to be checked, but very fast the list of dead ends grows and the algorithm does not need to check the same branch more than once.
 
-By drawing a tree of the recursive calls of the algorithm, the time complexity can be determined. Each step by traversing the created tree pre-order, is one call to the function FENR. But by checking the dead ends of the tree this can be lowered significantly.
-
-$$\sum_{i=1}^{n} 2^{-}$$ 
-
-i.e. $O(n^2)$ 
+By drawing a tree of the recursive calls of the algorithm, the time complexity can be determined. Each step, by traversing the created tree pre-order, is one call to the function FENR. But by checking the dead ends of the tree this can be lowered significantly.
 
 \newpage
 \section*{Task 2}
@@ -145,36 +141,92 @@ Here is the results of testing the graph 3 times with different amount of runs i
 
 \begin{lstlisting}
 timeExecution(graphA, 1, 10000000);
-.
-.
-.
+
+* Output *
 Started timing of execution...
-FOUND! There was an infinite path
+FOUND! There was an infinite path starting from node 1
 Average search time: 914  nanoseconds
 \end{lstlisting}
 
 \begin{lstlisting}
-timeExecution(graphA,1, 10000);
-.
-.
-.
+timeExecution(graphA, 1, 10000);
+
+* Output *
 Started timing of execution...
-FOUND! There was an infinite path
+FOUND! There was an infinite path starting from node 1
 Average search time: 6620  nanoseconds
 \end{lstlisting}
 
 \begin{lstlisting}
-timeExecution(graphA, 1, 1);
-.
-.
-.
+timeExecution(graphA, 1, 10);
+
+* Output *
 Started timing of execution...
-FOUND! There was an infinite path
-Average search time: 535626  nanoseconds
+FOUND! There was an infinite path starting from node 1
+Average search time: 211956  nanoseconds
 \end{lstlisting}
 
-
+From the results we can see that the time of each run increases, as we lower the amount of runs. This is probably caused by the machine that runs the program, and it's optimization of the execution.
 
 \subsection*{2:nd test}
+
+The following tests are done on random graphs. The program can create random graphs with a certain amount of nodes. This allows larger and more complex graphs to truly test the algorithm. The code below demonstrates how the creation of random graphs can be used. 
+
+\begin{lstlisting}
+public static void main(String[] args) {
+Graph graph = new Graph(10);
+graph.print();
+}
+
+* Output *
+1 -> 4 
+2 -> 4 5 8 
+3 -> 2 6 10 
+4 -> 5 6 9 
+5 -> 3 6 
+6 -> 2 
+7 -> 4 
+9 -> 6 
+10 -> 4 5 6
+\end{lstlisting}
+
+Here a random graph with 10 nodes is created by passing the integer 10 to the constructor of the class \textbf{Graph}. This creates 10 nodes, which then are connected randomly together. For each node, a random amount of arcs (between 0 and n, where n is the number of nodes in the graph) is drawn to random end nodes. Each time a new arc is added to the graph thorugh the method addArc(), it first checks if the arc violates the rules of the graph. Finally the graph is printed which shows every arc of the graph. The number before the arrow is the starting node and ever number after the arrow represents and end node in an arc.
+
+A random graph with 10 000 nodes was created and the search algorithm was tested with 3 different lengths of tests.
+
+\begin{lstlisting}
+public static void main(String[] args) {
+Graph graph = new Graph(20000);
+timeExecution(graph, 1, 10000000);
+timeExecution(graph, 1, 10000);
+timeExecution(graph, 1, 10);
+}
+
+* Output *
+Started timing of execution...
+FOUND! There was an infinite path starting from node 1
+Average search time: 12172  nanoseconds
+Started timing of execution...
+FOUND! There was an infinite path starting from node 1
+Average search time: 10841  nanoseconds
+Started timing of execution...
+FOUND! There was an infinite path starting from node 1
+Average search time: 10146  nanoseconds
+\end{lstlisting}
+
+\newpage
+
+\section*{Time complexity and memory requirements}
+
+The time complexity and the memory requirement of the program is hard to estimate. The principle of the algorithm of the program is the same as presented in \textbf{Task 1}. 
+
+If the graph is presented as a tree, the worst-case search time of it is $O(M)$, where M is the count of nodes in the tree. This however is not the same as the count of nodes and arcs in the original graph. The checking of dead ends decreases the search time significantly too. 
+
+To represent the graph, it's nodes and arcs, the program uses Java's HashMap collection. This collection uses key-value pairs which enables easy iteration of nodes and arcs of the graph. 
+A graph is made by adding an integer as an key to the HashMap. This represents a starting node. The value of the key is a list of integers. This is done with Java's utility ArrayList. This list consists integers that represent the end nodes that the node is connected to. 
+
+This means that the memory needed for creating a graph is directly correlated with the size of the graph. E.g for representing \textbf{graph a)} of this assignment, a HashMap with 9 key-value pairs is needed. Each key has an list which stores as many integers, as nodes it is connected too. So \textbf{graph a)} would need to store 24 integers, in addition of the overhead of the structures provided by Java. 
+
+The algorithm itself uses this representation of the graph to search for an infinite path. In addition it uses two ArrayList's of integers for storing the previously checked nodes and for the dead ends found during the search. These two ArrayList's however differ from each other. As presented in task 1 of this assignment, the algorithm creates a new branch on the 'tree' when searching for an infinite path. The ArrayList of dead ends is the same for each branch created. But the ArrayList of checked nodes is unique to every branch of the 'tree'. This means that for each level in the 'tree', the list of checked nodes grows with one. 
 
 \end{document}
